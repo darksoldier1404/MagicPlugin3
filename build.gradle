@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group 'yejunho10.magicplugin'
+version = '1.0.0.0'
+
+compileJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+configurations {
+    jar.archiveName = name + '-_v1_18_2-' + version + '.jar'
+}
+jar {
+    destinationDirectory.set(file("$rootDir/jars"))
+}
+
+build {
+    sourceCompatibility = 17
+    targetCompatibility = 17
+}
+repositories {
+    mavenCentral()
+    maven {
+        url "http://dpp.dpnw.site:8081/repository/maven-public/"
+        allowInsecureProtocol = true
+    }
+    maven { url = uri("https://papermc.io/repo/repository/maven-public/") }
+}
+
+dependencies {
+    implementation 'org.jetbrains:annotations:23.0.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    compileOnly 'org.bukkit.craftbukkit:craftbukkit:R0.1:1.18.2'
+    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+    compileOnly 'com.mojang.authlib:authlib:3.2.38'
+    compileOnly 'com.mojang.datafixers:datafixerupper:4.0.26'
+}
