@@ -9,12 +9,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import yejunho10.magicplugin.cmd.*;
+import yejunho10.magicplugin.etc.InitManager;
 import yejunho10.magicplugin.event.Event;
 import yejunho10.magicplugin.gui.ItemInventory;
 import yejunho10.magicplugin.npc.FPCommand;
 import yejunho10.magicplugin.npc.NPCManager;
+import yejunho10.magicplugin.party.Party;
 import yejunho10.magicplugin.party.PartyCommand;
+import yejunho10.magicplugin.party.PartyPlayer;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,24 +30,19 @@ public class GUIPlugin extends JavaPlugin implements CommandExecutor {
     private static GUIPlugin instance;
     public NPCManager npcManager;
 
+    public static Map<String, PartyPlayer> ppMap = new HashMap<>();
+
+    public static Map<Integer, Party> partyMap = new HashMap<>();
+
+    public static Map<String, Integer> inviteMap = new HashMap<>();
+
     Timer timerForAnnouncement = new Timer();
 
     @Override
     public void onEnable() {
         getLogger().info("[플러그인이 활성화됩니다]");
-
-        getServer().getPluginManager().registerEvents(new Event(), this);
-        getServer().getPluginManager().registerEvents(new ItemInventory(), this);
-        getCommand("mp").setExecutor(new MPCommand());
-        getCommand("rules").setExecutor(new Rules());
-        getCommand("menu").setExecutor(new ItemCommands());
-        getCommand("sethome").setExecutor(new SetHome());
-        getCommand("home").setExecutor(new Home());
-        getCommand("tk").setExecutor(new Ticket());
-        getCommand("party").setExecutor(new PartyCommand());
-        getCommand("fp").setExecutor(new FPCommand());
-
         instance = this;
+        InitManager.init();
         npcManager = new NPCManager();
 
         timerForAnnouncement.schedule(new TimerTask() {

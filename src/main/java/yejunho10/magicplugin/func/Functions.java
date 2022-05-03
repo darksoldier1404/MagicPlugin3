@@ -16,6 +16,7 @@ import static yejunho10.magicplugin.cmd.Ticket.ticket;
 import static yejunho10.magicplugin.func.Teleport.*;
 import static yejunho10.magicplugin.func.Teleport.loc;
 
+@SuppressWarnings("all")
 public class Functions {
     private static final GUIPlugin plugin = GUIPlugin.getInstance();
     private static FileConfiguration config = plugin.getConfig();

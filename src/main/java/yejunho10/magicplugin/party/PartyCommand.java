@@ -12,12 +12,11 @@ import org.jetbrains.annotations.NotNull;
 import yejunho10.magicplugin.GUIPlugin;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import static yejunho10.magicplugin.GUIPlugin.inviteMap;
 
 public class PartyCommand implements CommandExecutor, TabCompleter {
-    private static Map<String, Integer> inviteMap = new HashMap<>();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
@@ -28,7 +27,7 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
         Player p = (Player) sender;
 
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.RED + "[오류] - " + "사용법이 잘못되었습니다. /yejunho10.magicplugin.party help를 참고하세요.");
+            sender.sendMessage(ChatColor.RED + "[오류] - " + "사용법이 잘못되었습니다. /party help를 참고하세요.");
             return false;
         }
 
@@ -84,7 +83,7 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
 
                 party = Party.getParty(pp.getPartyId());
                 if (party.isMaster(p)) {
-                    p.sendMessage(ChatColor.RED + "[오류] - " + "파티장은 파티를 떠날 수 없습니다. /yejunho10.magicplugin.party remove를 사용해주세요.");
+                    p.sendMessage(ChatColor.RED + "[오류] - " + "파티장은 파티를 떠날 수 없습니다. /party remove를 사용해주세요.");
                     return false;
                 }
 
@@ -125,13 +124,13 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
                     return false;
                 }
 
-                if (target.getName() == p.getName()) {
+                if (target.getName().equals(p.getName())) {
                     p.sendMessage(ChatColor.RED + "[오류] - " + "자신을 초대할 수 없습니다.");
                     return false;
                 }
 
                 p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + target.getName() + "님을 초대하였습니다.");
-                target.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + p.getName() + "님이 파티에 초대되었습니다. 수락하려면 /yejunho10.magicplugin.party accept, 거절하려면 /yejunho10.magicplugin.party deny를 15초 이내에 사용해주세요.");
+                target.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + p.getName() + "님이 파티에 초대되었습니다. 수락하려면 /party accept, 거절하려면 /party deny를 15초 이내에 사용해주세요.");
 
                 inviteMap.put(target.getName(), party.getId());
 
@@ -221,15 +220,15 @@ public class PartyCommand implements CommandExecutor, TabCompleter {
                 p.sendMessage(ChatColor.YELLOW + "[안내] - " + ChatColor.LIGHT_PURPLE + "초대를 거절했습니다.");
                 break;
             case "help":
-                p.sendMessage(ChatColor.YELLOW + "========== " + ChatColor.LIGHT_PURPLE + "/yejunho10.magicplugin.party 명령어 도움말" + ChatColor.YELLOW + " ==========");
-                p.sendMessage(ChatColor.YELLOW + "/yejunho10.magicplugin.party create : 파티를 생성합니다.");
-                p.sendMessage(ChatColor.YELLOW + "/yejunho10.magicplugin.party list : 파티원 목록을 확인합니다.");
-                p.sendMessage(ChatColor.YELLOW + "/yejunho10.magicplugin.party remove : 파티를 삭제합니다.");
-                p.sendMessage(ChatColor.YELLOW + "/yejunho10.magicplugin.party leave : 파티를 떠납니다.");
-                p.sendMessage(ChatColor.YELLOW + "/yejunho10.magicplugin.party invite <플레이어> : <플레이어>를 파티에 초대합니다.");
-                p.sendMessage(ChatColor.YELLOW + "/yejunho10.magicplugin.party kick <플레이어> : <플레이어>를 파티에서 추방합니다.");
-                p.sendMessage(ChatColor.YELLOW + "/yejunho10.magicplugin.party accept : 초대를 수락합니다.");
-                p.sendMessage(ChatColor.YELLOW + "/yejunho10.magicplugin.party deny : 초대를 거절합니다.");
+                p.sendMessage(ChatColor.YELLOW + "========== " + ChatColor.LIGHT_PURPLE + "/party 명령어 도움말" + ChatColor.YELLOW + " ==========");
+                p.sendMessage(ChatColor.YELLOW + "/party create : 파티를 생성합니다.");
+                p.sendMessage(ChatColor.YELLOW + "/party list : 파티원 목록을 확인합니다.");
+                p.sendMessage(ChatColor.YELLOW + "/party remove : 파티를 삭제합니다.");
+                p.sendMessage(ChatColor.YELLOW + "/party leave : 파티를 떠납니다.");
+                p.sendMessage(ChatColor.YELLOW + "/party invite <플레이어> : <플레이어>를 파티에 초대합니다.");
+                p.sendMessage(ChatColor.YELLOW + "/party kick <플레이어> : <플레이어>를 파티에서 추방합니다.");
+                p.sendMessage(ChatColor.YELLOW + "/party accept : 초대를 수락합니다.");
+                p.sendMessage(ChatColor.YELLOW + "/party deny : 초대를 거절합니다.");
                 break;
         }
 
